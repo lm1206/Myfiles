@@ -6,7 +6,10 @@
 \usepackage{subfigure}
 \usepackage{graphicx} % Required for including pictures
 \usepackage{amsmath}
-\usepackage{amssymb,bm}
+\usepackage{pgf}
+\usepackage{tikz}
+\usetikzlibrary{arrows, decorations.pathmorphing, backgrounds, positioning, fit, petri, automata}
+\definecolor{yellow1}{rgb}{1,0.8,0.2} 
 \usepackage{float} % Allows putting an [H] in \begin{figure} to specify the exact location of the figure
 %\usepackage{wrapfig} % Allows in-line images such as the example fish picture
 
@@ -31,7 +34,6 @@
 %%\textsc{\LARGE University Name}\\[1.5cm] % Name of your university/college
 %%\textsc{\Large Major Heading}\\[0.5cm] % Major heading such as course name
 %%\textsc{\large Minor Heading}\\[0.5cm] % Minor heading such as course title
-
 \HRule \\[0.4cm]
 { \huge \bfseries Statistics}\\[0.4cm] % Title of your document
 \HRule \\[1.5cm]
@@ -62,7 +64,7 @@ The probability theory mainly research random variables such as $x$. $x$ could b
 $$
 P(x=k),\quad P(x \in A), \quad\text{where}\quad A \quad\text{is a Boreal set}
 $$
-The general study of statistics is to find out the distribution of $x$, hopefully, the probability distribution function or cumulative distribution function. Moreover, for multivariate variables, the task could be to find out the joint distribution($P(x_1,x_2,\vdots)$) or conditional distribution($P(x|y)$). Typically, the following steps:
+The general study of statistics is to find out the distribution of $x$, hopefully, the probability distribution function or cumulative distribution function. Moreover, for multivariate variables, the task could be to find out the joint distribution($P(x_1,x_2,\ldots)$) or conditional distribution($P(x|y)$). Typically, the following steps:
 \begin{itemize}
 \item Guess what should be the right distribution
 \item Estimate the parameters
@@ -72,7 +74,7 @@ So, this document is going to review the basic points of statistics follow the s
 
 \section{Guess}
 \subsection{Data perspective}
-Normally, the histogram chart can help us for a general perspective of the data probability distribution (data.hist(grid=...)) or cumulative distribution (idate.plot.hist(cumulative=True)).
+Normally, the histogram chart can help us for a general perspective of the data probability distribution (data.hist(grid=...)) or cumulative distribution (data.plot.hist(cumulative=True)).
 \begin{figure}[htb]
 \centering
 \subfigure[probability distribution]{
@@ -84,11 +86,6 @@ Normally, the histogram chart can help us for a general perspective of the data 
 \caption{Histogram}
 \label{fig:2}
 \end{figure}
-\subsection{Type of distributions}
-
-
-
-
 And the estimation of probability distribution
 $$
 P(s_k<x\leq s_{k+1})\approx \sum I(s_k<x_i\leq s_{k+1})/N
@@ -97,6 +94,91 @@ or cumulative distribution
 $$
 P(x\leq s_{k+1})\approx\sum I(x_i\leq s_{k+1})/N
 $$
+
+\subsection{Type of distributions}
+Three types of continuous distribution families are commonly used:  Beta, Gamma and Normal. The following chart is the families relation.
+\thispagestyle{empty}
+
+\tikzstyle{arrow} = [->,>=stealth]
+\begin{center}
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.8cm,
+                    semithick]
+  \tikzstyle{every state}=[rectangle,fill=yellow1,draw=none,text=black, text width=7em,text centered,rounded corners, minimum height=4em]
+  \node[state]         (Tb) at (0, 0)              {Transformed beta};
+  \node[state]         (GP) at (0, -3)           {Generalized Pareto};
+  \node[state]         (P) at (0, -6)        {Pareto};
+  \node[state]         (Bu) at (-5, -3)        {Bur};
+  \node[state]         (log) at (-5, -6)        {Loglogistic};
+  \node[state]         (plog) at (-5, 0)        {Paralogistic};
+  \node[state]       (iBu) at (5, -3)        {Inverse Bur};
+  \node[state]         (iP) at (5, -6)        {Inverse Pareto};
+  \node[state]         (iplog) at (5, 0)        {Inverse Paralogistic};
+  \node[state]         (TG) at (-4, 3)       {Transformed Gamma};
+  \node[state]         (G) at (-2, 6)        {Gamma};
+  \node[state]         (W) at (-6, 6)        {Weibull};
+  \node[state]         (E) at (-4, 9)        {Exponential};
+  \node[state]         (iTG) at (4, 3)       {Inverse Transformed Gamma};
+  \node[state]         (iG) at (2, 6)        {Inverse Gamma};
+  \node[state]         (iW) at (6, 6)        {Inverse Weibull};
+  \node[state]         (iE) at (4, 9)        {Inverse Exponential};
+  \node[state]         (N) at (0, 9)        {Normal};
+  \node[state]         (LN) at (0, 3)        {Lognormal};
+  \node[state]         (Chi) at (-2, 12)        {Chi-squre};
+  \node[state]         (t) at (2, 12)        {t};
+  \node[state]         (F) at (-6, 12)        {F};
+  \path (Tb) edge              node {} (GP);
+  \path (GP) edge              node {} (P);
+  \path (Tb) edge              node {} (Bu);
+  \path (Bu) edge              node {} (log);
+  \path (Bu) edge              node {} (P);
+  \path (Bu) edge              node {} (plog);
+  \path (iBu) edge              node {} (log);
+  \path (iBu) edge              node {} (iP);
+  \path (iBu) edge              node {} (iplog);
+  \path (Tb) edge              node {} (iBu);
+  \path (Tb) edge              node {} (TG);
+  \path (TG) edge              node {} (G);
+  \path (TG) edge              node {} (W);
+  \path (G) edge              node {} (E);
+  \path (W) edge              node {} (E);
+  \path (Tb) edge              node {} (iTG);
+  \path (iTG) edge              node {} (iG);
+  \path (iTG) edge              node {} (iW);
+  \path (iG) edge              node {} (iE);
+  \path (iW) edge              node {} (iE);
+  \path (N) edge              node {} (LN);
+  \path (G) edge              node {} (N);
+  \path (iG) edge              node {} (N);
+  \path (Bu) edge[bend left=35]    node {} (W);
+  \path (iBu) edge[bend right=35]     node {} (iW);
+  \path (G) edge   node {} (Chi);
+  \path (N) edge   node {} (Chi);
+  \path (Chi) edge   node {} (t);
+  \path (Chi) edge   node {} (F);
+  \path (N) edge   node {} (t);
+\end{tikzpicture}
+\end{center}
+\subsubsection{Beta distribution family}
+The PDF and CDF of Beta distribution (the commonly used version)  are:
+$$
+f(x;\alpha,\beta)=\frac{x^{\alpha-1}(1-x)^{\beta-1}}{B(\alpha,\beta)},
+\qquad
+F(x;\alpha,\beta)=\frac{B(x;\alpha,\beta)}{B(\alpha,\beta)}
+$$
+where
+$$
+B(\alpha,\beta)=\int_0^1u^\alpha (1-u)^{\beta-1},
+\qquad
+B(x;\alpha,\beta)=\int_0^xu^\alpha (1-u)^{\beta-1}
+$$
+\begin{figure}[htb]
+\centering
+\subfigure[PDF of Beta]{
+\includegraphics[height=6cm,width=8cm]{pic/betapdf.pdf}}
+\subfigure[CDF of Beta]{
+\includegraphics[height=6cm,width=8cm]{pic/betacdf.pdf}}
+\caption{Beta distribution}
+\end{figure}
 
 
 \section{Estimate}
