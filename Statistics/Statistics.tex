@@ -104,28 +104,28 @@ Three types of continuous distribution families are commonly used:  Beta, Gamma 
 \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.8cm,
                     semithick]
   \tikzstyle{every state}=[rectangle,fill=yellow1,draw=none,text=black, text width=7em,text centered,rounded corners, minimum height=4em]
-  \node[state]         (Tb) at (0, 0)              {Transformed beta};
-  \node[state]         (GP) at (0, -3)           {Generalized Pareto};
-  \node[state]         (P) at (0, -6)        {Pareto};
-  \node[state]         (Bu) at (-5, -3)        {Bur};
-  \node[state]         (log) at (-5, -6)        {Loglogistic};
-  \node[state]         (plog) at (-5, 0)        {Paralogistic};
-  \node[state]       (iBu) at (5, -3)        {Inverse Bur};
-  \node[state]         (iP) at (5, -6)        {Inverse Pareto};
-  \node[state]         (iplog) at (5, 0)        {Inverse Paralogistic};
-  \node[state]         (TG) at (-4, 3)       {Transformed Gamma};
-  \node[state]         (G) at (-2, 6)        {Gamma};
-  \node[state]         (W) at (-6, 6)        {Weibull};
-  \node[state]         (E) at (-4, 9)        {Exponential};
-  \node[state]         (iTG) at (4, 3)       {Inverse Transformed Gamma};
-  \node[state]         (iG) at (2, 6)        {Inverse Gamma};
-  \node[state]         (iW) at (6, 6)        {Inverse Weibull};
-  \node[state]         (iE) at (4, 9)        {Inverse Exponential};
-  \node[state]         (N) at (0, 9)        {Normal};
-  \node[state]         (LN) at (0, 3)        {Lognormal};
-  \node[state]         (Chi) at (-2, 12)        {Chi-squre};
-  \node[state]         (t) at (2, 12)        {t};
-  \node[state]         (F) at (-6, 12)        {F};
+  \node[state]         (Tb) at (0, 0)              {Transformed beta ($\alpha,\theta,\gamma,\tau$)};
+  \node[state]         (GP) at (0, -3)           {Generalized Pareto ($\gamma=1$)};
+  \node[state]         (P) at (0, -6)        {Pareto ($\gamma=\tau=1$};
+  \node[state]         (Bu) at (-5, -3)        {Bur ($\tau=1$)};
+  \node[state]         (log) at (-5, -6)        {Loglogistic ($\alpha=\gamma=1$)};
+  \node[state]         (plog) at (-5, 0)        {Paralogistic ($\alpha=\gamma,\tau=1$)};
+  \node[state]       (iBu) at (5, -3)        {Inverse Bur ($\alpha=1$)};
+  \node[state]         (iP) at (5, -6)        {Inverse Pareto ($\gamma=\alpha=1$)};
+  \node[state]         (iplog) at (5, 0)        {Inverse Paralogistic ($\tau=\gamma,\gamma=1$)};
+  \node[state]         (TG) at (-4, 3)       {Transformed Gamma ($\gamma,\theta,\tau$)};
+  \node[state]         (G) at (-2, 6)        {Gamma ($\tau=1$)};
+  \node[state]         (W) at (-6, 6)        {Weibull ($\gamma=1$)};
+  \node[state]         (E) at (-4, 9)        {Exponential ($\gamma=\tau=1$)};
+  \node[state]         (iTG) at (4, 3)       {Inverse Transformed Gamma ($\gamma,\theta,\tau$)};
+  \node[state]         (iG) at (2, 6)        {Inverse Gamma ($\tau=1$)};
+  \node[state]         (iW) at (6, 6)        {Inverse Weibull($\gamma=1$)};
+  \node[state]         (iE) at (4, 9)        {Inverse Exponential ($\gamma=\tau=1$)};
+  \node[state]         (N) at (0, 9)        {Normal ($\mu,\sigma$)};
+  \node[state]         (LN) at (0, 3)        {Lognormal ($\mu,\sigma$)};
+  \node[state]         (Chi) at (-2, 12)        {Chi-squre ($N$)};
+  \node[state]         (t) at (2, 12)        {t ($N$)};
+  \node[state]         (F) at (-6, 12)        {F ($M,N$)};
   \path (Tb) edge              node {} (GP);
   \path (GP) edge              node {} (P);
   \path (Tb) edge              node {} (Bu);
@@ -159,6 +159,10 @@ Three types of continuous distribution families are commonly used:  Beta, Gamma 
 \end{tikzpicture}
 \end{center}
 \subsubsection{Beta distribution family}
+The PDF and CDF of Transformed Beta distribution
+
+
+
 The PDF and CDF of Beta distribution (the commonly used version)  are:
 $$
 f(x;\alpha,\beta)=\frac{x^{\alpha-1}(1-x)^{\beta-1}}{B(\alpha,\beta)},
